@@ -1,0 +1,3 @@
+[submodule "proto-cap"]
+	path = proto-cap
+	url = https://github.com/cap-labs/proto-cap.git
