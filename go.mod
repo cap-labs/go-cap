@@ -2,8 +2,6 @@ module github.com/cap-labs/go-cap
 
 go 1.14
 
-require github.com/libs4go/scf4go v0.0.7 // indirect
-
 require (
 	github.com/golang/protobuf v1.4.2
 	github.com/libs4go/errors v0.0.3
