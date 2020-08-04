@@ -1,8 +1,19 @@
 package raft
 
-import "github.com/cap-labs/go-cap"
+import (
+	"github.com/cap-labs/go-cap"
+	"github.com/libs4go/errors"
+)
 
 //go:generate protoc --proto_path=../proto-cap --go_out=plugins=grpc,paths=source_relative:. raft.proto
+
+// ScopeOfAPIError .
+const errVendor = "raft"
+
+// errors
+var (
+	ErrOutOfCluster = errors.New("the peer is not in cluster config", errors.WithVendor(errVendor), errors.WithCode(-1))
+)
 
 // Network .
 type Network interface {
@@ -14,7 +25,7 @@ type Network interface {
 
 // ClusterManager .
 type ClusterManager interface {
-	Get(*cap.Cluster) error
+	Get() (*cap.Cluster, error)
 	Set(*cap.Cluster) error
 }
 
@@ -30,6 +41,8 @@ type LogStore interface {
 	Commit(index int64) error
 	// Last commited entry
 	LastCommitted() (*Entry, error)
+	// Last entry
+	LastEntry() (*Entry, error)
 	// Create snapshot
 	CreateSnapshot() error
 	// Get snapshot stream
