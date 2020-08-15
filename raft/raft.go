@@ -1,7 +1,6 @@
 package raft
 
 import (
-	"github.com/cap-labs/go-cap"
 	"github.com/libs4go/errors"
 )
 
@@ -18,15 +17,15 @@ var (
 // Network .
 type Network interface {
 	// Connect to remote raft peer
-	Connect(remote *cap.Peer) (RaftStateMachineClient, error)
+	Connect(remote *Peer) (RaftStateMachineClient, error)
 
-	Serve(local *cap.Peer, server RaftStateMachineServer) error
+	Serve(local *Peer, server RaftStateMachineServer) error
 }
 
 // ClusterManager .
 type ClusterManager interface {
-	Get() (*cap.Cluster, error)
-	Set(*cap.Cluster) error
+	Get() (*Cluster, error)
+	Set(*Cluster) error
 }
 
 // LogStore .
