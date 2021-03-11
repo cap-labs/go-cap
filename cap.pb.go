@@ -29,18 +29,19 @@ const (
 // of the legacy proto package is being used.
 const _ = proto.ProtoPackageIsVersion4
 
-type Message struct {
+/// Transport packet object
+type Packet struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	From    string `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`       /// message from node
-	To      string `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`           /// message send to
-	Content []byte `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"` /// message content
+	From string `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"` // Packet from peer id
+	To   string `protobuf:"bytes,2,opt,name=to,proto3" json:"to,omitempty"`     // Packet to peer id
+	Data []byte `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"` // Packet data field
 }
 
-func (x *Message) Reset() {
-	*x = Message{}
+func (x *Packet) Reset() {
+	*x = Packet{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_cap_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -48,13 +49,13 @@ func (x *Message) Reset() {
 	}
 }
 
-func (x *Message) String() string {
+func (x *Packet) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Message) ProtoMessage() {}
+func (*Packet) ProtoMessage() {}
 
-func (x *Message) ProtoReflect() protoreflect.Message {
+func (x *Packet) ProtoReflect() protoreflect.Message {
 	mi := &file_cap_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -66,42 +67,42 @@ func (x *Message) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Message.ProtoReflect.Descriptor instead.
-func (*Message) Descriptor() ([]byte, []int) {
+// Deprecated: Use Packet.ProtoReflect.Descriptor instead.
+func (*Packet) Descriptor() ([]byte, []int) {
 	return file_cap_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Message) GetFrom() string {
+func (x *Packet) GetFrom() string {
 	if x != nil {
 		return x.From
 	}
 	return ""
 }
 
-func (x *Message) GetTo() string {
+func (x *Packet) GetTo() string {
 	if x != nil {
 		return x.To
 	}
 	return ""
 }
 
-func (x *Message) GetContent() []byte {
+func (x *Packet) GetData() []byte {
 	if x != nil {
-		return x.Content
+		return x.Data
 	}
 	return nil
 }
 
-type ConsensusRequest struct {
+type PutPeerRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Content []byte `protobuf:"bytes,1,opt,name=content,proto3" json:"content,omitempty"`
+	Addrs []string `protobuf:"bytes,1,rep,name=addrs,proto3" json:"addrs,omitempty"` // peers addr
 }
 
-func (x *ConsensusRequest) Reset() {
-	*x = ConsensusRequest{}
+func (x *PutPeerRequest) Reset() {
+	*x = PutPeerRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_cap_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -109,13 +110,13 @@ func (x *ConsensusRequest) Reset() {
 	}
 }
 
-func (x *ConsensusRequest) String() string {
+func (x *PutPeerRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ConsensusRequest) ProtoMessage() {}
+func (*PutPeerRequest) ProtoMessage() {}
 
-func (x *ConsensusRequest) ProtoReflect() protoreflect.Message {
+func (x *PutPeerRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_cap_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -127,31 +128,26 @@ func (x *ConsensusRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ConsensusRequest.ProtoReflect.Descriptor instead.
-func (*ConsensusRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use PutPeerRequest.ProtoReflect.Descriptor instead.
+func (*PutPeerRequest) Descriptor() ([]byte, []int) {
 	return file_cap_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *ConsensusRequest) GetContent() []byte {
+func (x *PutPeerRequest) GetAddrs() []string {
 	if x != nil {
-		return x.Content
+		return x.Addrs
 	}
 	return nil
 }
 
-type ConsensusResponse struct {
+type PutPeerResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
-
-	// Types that are assignable to Content:
-	//	*ConsensusResponse_SendMessage
-	//	*ConsensusResponse_AppRequest
-	Content isConsensusResponse_Content `protobuf_oneof:"content"`
 }
 
-func (x *ConsensusResponse) Reset() {
-	*x = ConsensusResponse{}
+func (x *PutPeerResponse) Reset() {
+	*x = PutPeerResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_cap_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -159,13 +155,13 @@ func (x *ConsensusResponse) Reset() {
 	}
 }
 
-func (x *ConsensusResponse) String() string {
+func (x *PutPeerResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ConsensusResponse) ProtoMessage() {}
+func (*PutPeerResponse) ProtoMessage() {}
 
-func (x *ConsensusResponse) ProtoReflect() protoreflect.Message {
+func (x *PutPeerResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_cap_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -177,58 +173,21 @@ func (x *ConsensusResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ConsensusResponse.ProtoReflect.Descriptor instead.
-func (*ConsensusResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use PutPeerResponse.ProtoReflect.Descriptor instead.
+func (*PutPeerResponse) Descriptor() ([]byte, []int) {
 	return file_cap_proto_rawDescGZIP(), []int{2}
 }
 
-func (m *ConsensusResponse) GetContent() isConsensusResponse_Content {
-	if m != nil {
-		return m.Content
-	}
-	return nil
-}
-
-func (x *ConsensusResponse) GetSendMessage() *Message {
-	if x, ok := x.GetContent().(*ConsensusResponse_SendMessage); ok {
-		return x.SendMessage
-	}
-	return nil
-}
-
-func (x *ConsensusResponse) GetAppRequest() *ApplicationRequest {
-	if x, ok := x.GetContent().(*ConsensusResponse_AppRequest); ok {
-		return x.AppRequest
-	}
-	return nil
-}
-
-type isConsensusResponse_Content interface {
-	isConsensusResponse_Content()
-}
-
-type ConsensusResponse_SendMessage struct {
-	SendMessage *Message `protobuf:"bytes,1,opt,name=sendMessage,proto3,oneof"` // message send to node
-}
-
-type ConsensusResponse_AppRequest struct {
-	AppRequest *ApplicationRequest `protobuf:"bytes,2,opt,name=appRequest,proto3,oneof"` // application request
-}
-
-func (*ConsensusResponse_SendMessage) isConsensusResponse_Content() {}
-
-func (*ConsensusResponse_AppRequest) isConsensusResponse_Content() {}
-
-type ApplicationRequest struct {
+type GetPeerRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Content []byte `protobuf:"bytes,1,opt,name=content,proto3" json:"content,omitempty"`
+	Peers string `protobuf:"bytes,1,opt,name=peers,proto3" json:"peers,omitempty"` // peer id array
 }
 
-func (x *ApplicationRequest) Reset() {
-	*x = ApplicationRequest{}
+func (x *GetPeerRequest) Reset() {
+	*x = GetPeerRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_cap_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -236,13 +195,13 @@ func (x *ApplicationRequest) Reset() {
 	}
 }
 
-func (x *ApplicationRequest) String() string {
+func (x *GetPeerRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ApplicationRequest) ProtoMessage() {}
+func (*GetPeerRequest) ProtoMessage() {}
 
-func (x *ApplicationRequest) ProtoReflect() protoreflect.Message {
+func (x *GetPeerRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_cap_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -254,28 +213,28 @@ func (x *ApplicationRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ApplicationRequest.ProtoReflect.Descriptor instead.
-func (*ApplicationRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetPeerRequest.ProtoReflect.Descriptor instead.
+func (*GetPeerRequest) Descriptor() ([]byte, []int) {
 	return file_cap_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *ApplicationRequest) GetContent() []byte {
+func (x *GetPeerRequest) GetPeers() string {
 	if x != nil {
-		return x.Content
+		return x.Peers
 	}
-	return nil
+	return ""
 }
 
-type ApplicationResponse struct {
+type GetPeerResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	StateSet *StateSetRequest `protobuf:"bytes,1,opt,name=stateSet,proto3" json:"stateSet,omitempty"`
+	Addr string `protobuf:"bytes,1,opt,name=addr,proto3" json:"addr,omitempty"` // peer addr
 }
 
-func (x *ApplicationResponse) Reset() {
-	*x = ApplicationResponse{}
+func (x *GetPeerResponse) Reset() {
+	*x = GetPeerResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_cap_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -283,13 +242,13 @@ func (x *ApplicationResponse) Reset() {
 	}
 }
 
-func (x *ApplicationResponse) String() string {
+func (x *GetPeerResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ApplicationResponse) ProtoMessage() {}
+func (*GetPeerResponse) ProtoMessage() {}
 
-func (x *ApplicationResponse) ProtoReflect() protoreflect.Message {
+func (x *GetPeerResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_cap_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -301,29 +260,28 @@ func (x *ApplicationResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ApplicationResponse.ProtoReflect.Descriptor instead.
-func (*ApplicationResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetPeerResponse.ProtoReflect.Descriptor instead.
+func (*GetPeerResponse) Descriptor() ([]byte, []int) {
 	return file_cap_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *ApplicationResponse) GetStateSet() *StateSetRequest {
+func (x *GetPeerResponse) GetAddr() string {
 	if x != nil {
-		return x.StateSet
+		return x.Addr
 	}
-	return nil
+	return ""
 }
 
-type StateSet struct {
+type ExecRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Key   []byte `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`     // State set key word
-	Value []byte `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"` // State set value
+	Data []byte `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"` //
 }
 
-func (x *StateSet) Reset() {
-	*x = StateSet{}
+func (x *ExecRequest) Reset() {
+	*x = ExecRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_cap_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -331,13 +289,13 @@ func (x *StateSet) Reset() {
 	}
 }
 
-func (x *StateSet) String() string {
+func (x *ExecRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*StateSet) ProtoMessage() {}
+func (*ExecRequest) ProtoMessage() {}
 
-func (x *StateSet) ProtoReflect() protoreflect.Message {
+func (x *ExecRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_cap_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -349,37 +307,26 @@ func (x *StateSet) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use StateSet.ProtoReflect.Descriptor instead.
-func (*StateSet) Descriptor() ([]byte, []int) {
+// Deprecated: Use ExecRequest.ProtoReflect.Descriptor instead.
+func (*ExecRequest) Descriptor() ([]byte, []int) {
 	return file_cap_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *StateSet) GetKey() []byte {
+func (x *ExecRequest) GetData() []byte {
 	if x != nil {
-		return x.Key
+		return x.Data
 	}
 	return nil
 }
 
-func (x *StateSet) GetValue() []byte {
-	if x != nil {
-		return x.Value
-	}
-	return nil
-}
-
-type StateSetRequest struct {
+type ExecResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
-
-	State    string      `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`       // State to set
-	BatchSet []*StateSet `protobuf:"bytes,2,rep,name=batchSet,proto3" json:"batchSet,omitempty"` // State set batch
-	MaxSize  uint32      `protobuf:"varint,3,opt,name=maxSize,proto3" json:"maxSize,omitempty"`  // State max size
 }
 
-func (x *StateSetRequest) Reset() {
-	*x = StateSetRequest{}
+func (x *ExecResponse) Reset() {
+	*x = ExecResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_cap_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -387,13 +334,13 @@ func (x *StateSetRequest) Reset() {
 	}
 }
 
-func (x *StateSetRequest) String() string {
+func (x *ExecResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*StateSetRequest) ProtoMessage() {}
+func (*ExecResponse) ProtoMessage() {}
 
-func (x *StateSetRequest) ProtoReflect() protoreflect.Message {
+func (x *ExecResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_cap_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -405,42 +352,22 @@ func (x *StateSetRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use StateSetRequest.ProtoReflect.Descriptor instead.
-func (*StateSetRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ExecResponse.ProtoReflect.Descriptor instead.
+func (*ExecResponse) Descriptor() ([]byte, []int) {
 	return file_cap_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *StateSetRequest) GetState() string {
-	if x != nil {
-		return x.State
-	}
-	return ""
-}
-
-func (x *StateSetRequest) GetBatchSet() []*StateSet {
-	if x != nil {
-		return x.BatchSet
-	}
-	return nil
-}
-
-func (x *StateSetRequest) GetMaxSize() uint32 {
-	if x != nil {
-		return x.MaxSize
-	}
-	return 0
-}
-
-type StateSetResponse struct {
+/// RPC data packet
+type RPCPacket struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	CurrentSize uint32 `protobuf:"varint,1,opt,name=currentSize,proto3" json:"currentSize,omitempty"` // State current size after set value
+	Data []byte `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
 }
 
-func (x *StateSetResponse) Reset() {
-	*x = StateSetResponse{}
+func (x *RPCPacket) Reset() {
+	*x = RPCPacket{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_cap_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -448,13 +375,13 @@ func (x *StateSetResponse) Reset() {
 	}
 }
 
-func (x *StateSetResponse) String() string {
+func (x *RPCPacket) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*StateSetResponse) ProtoMessage() {}
+func (*RPCPacket) ProtoMessage() {}
 
-func (x *StateSetResponse) ProtoReflect() protoreflect.Message {
+func (x *RPCPacket) ProtoReflect() protoreflect.Message {
 	mi := &file_cap_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -466,28 +393,32 @@ func (x *StateSetResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use StateSetResponse.ProtoReflect.Descriptor instead.
-func (*StateSetResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use RPCPacket.ProtoReflect.Descriptor instead.
+func (*RPCPacket) Descriptor() ([]byte, []int) {
 	return file_cap_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *StateSetResponse) GetCurrentSize() uint32 {
+func (x *RPCPacket) GetData() []byte {
 	if x != nil {
-		return x.CurrentSize
+		return x.Data
 	}
-	return 0
+	return nil
 }
 
-type StateGetRequest struct {
+/// Put state request message
+type PutStateRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Keys []string `protobuf:"bytes,1,rep,name=keys,proto3" json:"keys,omitempty"` // State get by keys
+	State    []byte   `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`        /// state name
+	Capacity uint64   `protobuf:"varint,2,opt,name=capacity,proto3" json:"capacity,omitempty"` /// advise state maximum storage capacity in bytes
+	Keys     [][]byte `protobuf:"bytes,3,rep,name=keys,proto3" json:"keys,omitempty"`          /// Put value associate key
+	Values   [][]byte `protobuf:"bytes,4,rep,name=values,proto3" json:"values,omitempty"`      /// Put value data
 }
 
-func (x *StateGetRequest) Reset() {
-	*x = StateGetRequest{}
+func (x *PutStateRequest) Reset() {
+	*x = PutStateRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_cap_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -495,13 +426,13 @@ func (x *StateGetRequest) Reset() {
 	}
 }
 
-func (x *StateGetRequest) String() string {
+func (x *PutStateRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*StateGetRequest) ProtoMessage() {}
+func (*PutStateRequest) ProtoMessage() {}
 
-func (x *StateGetRequest) ProtoReflect() protoreflect.Message {
+func (x *PutStateRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_cap_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -513,29 +444,52 @@ func (x *StateGetRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use StateGetRequest.ProtoReflect.Descriptor instead.
-func (*StateGetRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use PutStateRequest.ProtoReflect.Descriptor instead.
+func (*PutStateRequest) Descriptor() ([]byte, []int) {
 	return file_cap_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *StateGetRequest) GetKeys() []string {
+func (x *PutStateRequest) GetState() []byte {
+	if x != nil {
+		return x.State
+	}
+	return nil
+}
+
+func (x *PutStateRequest) GetCapacity() uint64 {
+	if x != nil {
+		return x.Capacity
+	}
+	return 0
+}
+
+func (x *PutStateRequest) GetKeys() [][]byte {
 	if x != nil {
 		return x.Keys
 	}
 	return nil
 }
 
-type StateGetResponse struct {
+func (x *PutStateRequest) GetValues() [][]byte {
+	if x != nil {
+		return x.Values
+	}
+	return nil
+}
+
+/// Put state response message
+type PutStateResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Values      [][]byte `protobuf:"bytes,1,rep,name=values,proto3" json:"values,omitempty"`            // State get values
-	CurrentSize uint32   `protobuf:"varint,2,opt,name=currentSize,proto3" json:"currentSize,omitempty"` // State current size
+	State   []byte `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`      /// state name
+	Size    uint64 `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`       /// state current storage size in bytes
+	Written uint64 `protobuf:"varint,3,opt,name=written,proto3" json:"written,omitempty"` /// written data in bytes, zero if out of capacity
 }
 
-func (x *StateGetResponse) Reset() {
-	*x = StateGetResponse{}
+func (x *PutStateResponse) Reset() {
+	*x = PutStateResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_cap_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -543,13 +497,13 @@ func (x *StateGetResponse) Reset() {
 	}
 }
 
-func (x *StateGetResponse) String() string {
+func (x *PutStateResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*StateGetResponse) ProtoMessage() {}
+func (*PutStateResponse) ProtoMessage() {}
 
-func (x *StateGetResponse) ProtoReflect() protoreflect.Message {
+func (x *PutStateResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_cap_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -561,35 +515,43 @@ func (x *StateGetResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use StateGetResponse.ProtoReflect.Descriptor instead.
-func (*StateGetResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use PutStateResponse.ProtoReflect.Descriptor instead.
+func (*PutStateResponse) Descriptor() ([]byte, []int) {
 	return file_cap_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *StateGetResponse) GetValues() [][]byte {
+func (x *PutStateResponse) GetState() []byte {
 	if x != nil {
-		return x.Values
+		return x.State
 	}
 	return nil
 }
 
-func (x *StateGetResponse) GetCurrentSize() uint32 {
+func (x *PutStateResponse) GetSize() uint64 {
 	if x != nil {
-		return x.CurrentSize
+		return x.Size
 	}
 	return 0
 }
 
-type PeerSetRequest struct {
+func (x *PutStateResponse) GetWritten() uint64 {
+	if x != nil {
+		return x.Written
+	}
+	return 0
+}
+
+/// batch put state request
+type BatchPutStateRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Urls []string `protobuf:"bytes,1,rep,name=urls,proto3" json:"urls,omitempty"` // peer set
+	Batch []*PutStateRequest `protobuf:"bytes,1,rep,name=batch,proto3" json:"batch,omitempty"` /// request array
 }
 
-func (x *PeerSetRequest) Reset() {
-	*x = PeerSetRequest{}
+func (x *BatchPutStateRequest) Reset() {
+	*x = BatchPutStateRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_cap_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -597,13 +559,13 @@ func (x *PeerSetRequest) Reset() {
 	}
 }
 
-func (x *PeerSetRequest) String() string {
+func (x *BatchPutStateRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*PeerSetRequest) ProtoMessage() {}
+func (*BatchPutStateRequest) ProtoMessage() {}
 
-func (x *PeerSetRequest) ProtoReflect() protoreflect.Message {
+func (x *BatchPutStateRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_cap_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -615,26 +577,29 @@ func (x *PeerSetRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use PeerSetRequest.ProtoReflect.Descriptor instead.
-func (*PeerSetRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use BatchPutStateRequest.ProtoReflect.Descriptor instead.
+func (*BatchPutStateRequest) Descriptor() ([]byte, []int) {
 	return file_cap_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *PeerSetRequest) GetUrls() []string {
+func (x *BatchPutStateRequest) GetBatch() []*PutStateRequest {
 	if x != nil {
-		return x.Urls
+		return x.Batch
 	}
 	return nil
 }
 
-type PeerSetResponse struct {
+/// batch put state response
+type BatchPutStateResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
+
+	Batch []*PutStateResponse `protobuf:"bytes,1,rep,name=batch,proto3" json:"batch,omitempty"` ///  response array
 }
 
-func (x *PeerSetResponse) Reset() {
-	*x = PeerSetResponse{}
+func (x *BatchPutStateResponse) Reset() {
+	*x = BatchPutStateResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_cap_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -642,13 +607,13 @@ func (x *PeerSetResponse) Reset() {
 	}
 }
 
-func (x *PeerSetResponse) String() string {
+func (x *BatchPutStateResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*PeerSetResponse) ProtoMessage() {}
+func (*BatchPutStateResponse) ProtoMessage() {}
 
-func (x *PeerSetResponse) ProtoReflect() protoreflect.Message {
+func (x *BatchPutStateResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_cap_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -660,90 +625,328 @@ func (x *PeerSetResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use PeerSetResponse.ProtoReflect.Descriptor instead.
-func (*PeerSetResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use BatchPutStateResponse.ProtoReflect.Descriptor instead.
+func (*BatchPutStateResponse) Descriptor() ([]byte, []int) {
 	return file_cap_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *BatchPutStateResponse) GetBatch() []*PutStateResponse {
+	if x != nil {
+		return x.Batch
+	}
+	return nil
+}
+
+type GetStateRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	State []byte   `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"` /// state name
+	Keys  [][]byte `protobuf:"bytes,3,rep,name=keys,proto3" json:"keys,omitempty"`   /// get value associate keys
+}
+
+func (x *GetStateRequest) Reset() {
+	*x = GetStateRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cap_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetStateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetStateRequest) ProtoMessage() {}
+
+func (x *GetStateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_cap_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetStateRequest.ProtoReflect.Descriptor instead.
+func (*GetStateRequest) Descriptor() ([]byte, []int) {
+	return file_cap_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *GetStateRequest) GetState() []byte {
+	if x != nil {
+		return x.State
+	}
+	return nil
+}
+
+func (x *GetStateRequest) GetKeys() [][]byte {
+	if x != nil {
+		return x.Keys
+	}
+	return nil
+}
+
+type GetStateResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	State  []byte   `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`   /// state name
+	Size   uint64   `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`    /// state current storage size in bytes
+	Values [][]byte `protobuf:"bytes,4,rep,name=values,proto3" json:"values,omitempty"` /// get values data
+}
+
+func (x *GetStateResponse) Reset() {
+	*x = GetStateResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cap_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetStateResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetStateResponse) ProtoMessage() {}
+
+func (x *GetStateResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_cap_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetStateResponse.ProtoReflect.Descriptor instead.
+func (*GetStateResponse) Descriptor() ([]byte, []int) {
+	return file_cap_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *GetStateResponse) GetState() []byte {
+	if x != nil {
+		return x.State
+	}
+	return nil
+}
+
+func (x *GetStateResponse) GetSize() uint64 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *GetStateResponse) GetValues() [][]byte {
+	if x != nil {
+		return x.Values
+	}
+	return nil
+}
+
+/// batch put state request
+type BatchGetStateRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Batch []*GetStateRequest `protobuf:"bytes,1,rep,name=batch,proto3" json:"batch,omitempty"` /// request array
+}
+
+func (x *BatchGetStateRequest) Reset() {
+	*x = BatchGetStateRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cap_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *BatchGetStateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BatchGetStateRequest) ProtoMessage() {}
+
+func (x *BatchGetStateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_cap_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BatchGetStateRequest.ProtoReflect.Descriptor instead.
+func (*BatchGetStateRequest) Descriptor() ([]byte, []int) {
+	return file_cap_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *BatchGetStateRequest) GetBatch() []*GetStateRequest {
+	if x != nil {
+		return x.Batch
+	}
+	return nil
+}
+
+/// batch put state response
+type BatchGetStateResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Batch []*GetStateResponse `protobuf:"bytes,1,rep,name=batch,proto3" json:"batch,omitempty"` ///  response array
+}
+
+func (x *BatchGetStateResponse) Reset() {
+	*x = BatchGetStateResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cap_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *BatchGetStateResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BatchGetStateResponse) ProtoMessage() {}
+
+func (x *BatchGetStateResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_cap_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BatchGetStateResponse.ProtoReflect.Descriptor instead.
+func (*BatchGetStateResponse) Descriptor() ([]byte, []int) {
+	return file_cap_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *BatchGetStateResponse) GetBatch() []*GetStateResponse {
+	if x != nil {
+		return x.Batch
+	}
+	return nil
 }
 
 var File_cap_proto protoreflect.FileDescriptor
 
 var file_cap_proto_rawDesc = []byte{
 	0x0a, 0x09, 0x63, 0x61, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x03, 0x63, 0x61, 0x70,
-	0x22, 0x47, 0x0a, 0x07, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x66,
-	0x72, 0x6f, 0x6d, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x12,
-	0x0e, 0x0a, 0x02, 0x74, 0x6f, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x74, 0x6f, 0x12,
-	0x18, 0x0a, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0c,
-	0x52, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x22, 0x2c, 0x0a, 0x10, 0x43, 0x6f, 0x6e,
-	0x73, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a,
-	0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x07,
-	0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x22, 0x8b, 0x01, 0x0a, 0x11, 0x43, 0x6f, 0x6e, 0x73,
-	0x65, 0x6e, 0x73, 0x75, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x30, 0x0a,
-	0x0b, 0x73, 0x65, 0x6e, 0x64, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x0c, 0x2e, 0x63, 0x61, 0x70, 0x2e, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65,
-	0x48, 0x00, 0x52, 0x0b, 0x73, 0x65, 0x6e, 0x64, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12,
-	0x39, 0x0a, 0x0a, 0x61, 0x70, 0x70, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x63, 0x61, 0x70, 0x2e, 0x41, 0x70, 0x70, 0x6c, 0x69, 0x63,
-	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x48, 0x00, 0x52, 0x0a,
-	0x61, 0x70, 0x70, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x42, 0x09, 0x0a, 0x07, 0x63, 0x6f,
-	0x6e, 0x74, 0x65, 0x6e, 0x74, 0x22, 0x2e, 0x0a, 0x12, 0x41, 0x70, 0x70, 0x6c, 0x69, 0x63, 0x61,
-	0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x63,
-	0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x07, 0x63, 0x6f,
-	0x6e, 0x74, 0x65, 0x6e, 0x74, 0x22, 0x47, 0x0a, 0x13, 0x41, 0x70, 0x70, 0x6c, 0x69, 0x63, 0x61,
-	0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x30, 0x0a, 0x08,
-	0x73, 0x74, 0x61, 0x74, 0x65, 0x53, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x14,
-	0x2e, 0x63, 0x61, 0x70, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x65, 0x53, 0x65, 0x74, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x52, 0x08, 0x73, 0x74, 0x61, 0x74, 0x65, 0x53, 0x65, 0x74, 0x22, 0x32,
-	0x0a, 0x08, 0x53, 0x74, 0x61, 0x74, 0x65, 0x53, 0x65, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65,
-	0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05,
-	0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x05, 0x76, 0x61, 0x6c,
-	0x75, 0x65, 0x22, 0x6c, 0x0a, 0x0f, 0x53, 0x74, 0x61, 0x74, 0x65, 0x53, 0x65, 0x74, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x12, 0x29, 0x0a, 0x08, 0x62,
-	0x61, 0x74, 0x63, 0x68, 0x53, 0x65, 0x74, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0d, 0x2e,
-	0x63, 0x61, 0x70, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x65, 0x53, 0x65, 0x74, 0x52, 0x08, 0x62, 0x61,
-	0x74, 0x63, 0x68, 0x53, 0x65, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x61, 0x78, 0x53, 0x69, 0x7a,
-	0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x07, 0x6d, 0x61, 0x78, 0x53, 0x69, 0x7a, 0x65,
-	0x22, 0x34, 0x0a, 0x10, 0x53, 0x74, 0x61, 0x74, 0x65, 0x53, 0x65, 0x74, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x63, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x53,
-	0x69, 0x7a, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x0b, 0x63, 0x75, 0x72, 0x72, 0x65,
-	0x6e, 0x74, 0x53, 0x69, 0x7a, 0x65, 0x22, 0x25, 0x0a, 0x0f, 0x53, 0x74, 0x61, 0x74, 0x65, 0x47,
-	0x65, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6b, 0x65, 0x79,
-	0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x04, 0x6b, 0x65, 0x79, 0x73, 0x22, 0x4c, 0x0a,
-	0x10, 0x53, 0x74, 0x61, 0x74, 0x65, 0x47, 0x65, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x12, 0x16, 0x0a, 0x06, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28,
-	0x0c, 0x52, 0x06, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x73, 0x12, 0x20, 0x0a, 0x0b, 0x63, 0x75, 0x72,
-	0x72, 0x65, 0x6e, 0x74, 0x53, 0x69, 0x7a, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x0b,
-	0x63, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x53, 0x69, 0x7a, 0x65, 0x22, 0x24, 0x0a, 0x0e, 0x50,
-	0x65, 0x65, 0x72, 0x53, 0x65, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a,
-	0x04, 0x75, 0x72, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x04, 0x75, 0x72, 0x6c,
-	0x73, 0x22, 0x11, 0x0a, 0x0f, 0x50, 0x65, 0x65, 0x72, 0x53, 0x65, 0x74, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x32, 0x4a, 0x0a, 0x0b, 0x41, 0x70, 0x70, 0x6c, 0x69, 0x63, 0x61, 0x74,
-	0x69, 0x6f, 0x6e, 0x12, 0x3b, 0x0a, 0x06, 0x48, 0x61, 0x6e, 0x64, 0x6c, 0x65, 0x12, 0x17, 0x2e,
-	0x63, 0x61, 0x70, 0x2e, 0x41, 0x70, 0x70, 0x6c, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x18, 0x2e, 0x63, 0x61, 0x70, 0x2e, 0x41, 0x70, 0x70,
-	0x6c, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x32, 0x44, 0x0a, 0x09, 0x43, 0x6f, 0x6e, 0x73, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x12, 0x37, 0x0a,
-	0x06, 0x48, 0x61, 0x6e, 0x64, 0x6c, 0x65, 0x12, 0x15, 0x2e, 0x63, 0x61, 0x70, 0x2e, 0x43, 0x6f,
-	0x6e, 0x73, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16,
-	0x2e, 0x63, 0x61, 0x70, 0x2e, 0x43, 0x6f, 0x6e, 0x73, 0x65, 0x6e, 0x73, 0x75, 0x73, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0x6c, 0x0a, 0x0a, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72,
-	0x6b, 0x69, 0x6e, 0x67, 0x12, 0x28, 0x0a, 0x06, 0x48, 0x61, 0x6e, 0x64, 0x6c, 0x65, 0x12, 0x0c,
-	0x2e, 0x63, 0x61, 0x70, 0x2e, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x1a, 0x0c, 0x2e, 0x63,
-	0x61, 0x70, 0x2e, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x28, 0x01, 0x30, 0x01, 0x12, 0x34,
-	0x0a, 0x07, 0x50, 0x65, 0x65, 0x72, 0x53, 0x65, 0x74, 0x12, 0x13, 0x2e, 0x63, 0x61, 0x70, 0x2e,
-	0x50, 0x65, 0x65, 0x72, 0x53, 0x65, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x14,
-	0x2e, 0x63, 0x61, 0x70, 0x2e, 0x50, 0x65, 0x65, 0x72, 0x53, 0x65, 0x74, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x32, 0x7b, 0x0a, 0x07, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x12,
-	0x37, 0x0a, 0x08, 0x53, 0x74, 0x61, 0x74, 0x65, 0x53, 0x65, 0x74, 0x12, 0x14, 0x2e, 0x63, 0x61,
-	0x70, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x65, 0x53, 0x65, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x1a, 0x15, 0x2e, 0x63, 0x61, 0x70, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x65, 0x53, 0x65, 0x74,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x37, 0x0a, 0x08, 0x53, 0x74, 0x61, 0x74,
-	0x65, 0x47, 0x65, 0x74, 0x12, 0x14, 0x2e, 0x63, 0x61, 0x70, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x65,
-	0x47, 0x65, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x15, 0x2e, 0x63, 0x61, 0x70,
-	0x2e, 0x53, 0x74, 0x61, 0x74, 0x65, 0x47, 0x65, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x42, 0x20, 0x5a, 0x1e, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
-	0x63, 0x61, 0x70, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x67, 0x6f, 0x2d, 0x63, 0x61, 0x70, 0x3b,
-	0x63, 0x61, 0x70, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x22, 0x40, 0x0a, 0x06, 0x50, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x66, 0x72,
+	0x6f, 0x6d, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x12, 0x0e,
+	0x0a, 0x02, 0x74, 0x6f, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x74, 0x6f, 0x12, 0x12,
+	0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x04, 0x64, 0x61,
+	0x74, 0x61, 0x22, 0x26, 0x0a, 0x0e, 0x50, 0x75, 0x74, 0x50, 0x65, 0x65, 0x72, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x61, 0x64, 0x64, 0x72, 0x73, 0x18, 0x01, 0x20,
+	0x03, 0x28, 0x09, 0x52, 0x05, 0x61, 0x64, 0x64, 0x72, 0x73, 0x22, 0x11, 0x0a, 0x0f, 0x50, 0x75,
+	0x74, 0x50, 0x65, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x26, 0x0a,
+	0x0e, 0x47, 0x65, 0x74, 0x50, 0x65, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
+	0x14, 0x0a, 0x05, 0x70, 0x65, 0x65, 0x72, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05,
+	0x70, 0x65, 0x65, 0x72, 0x73, 0x22, 0x25, 0x0a, 0x0f, 0x47, 0x65, 0x74, 0x50, 0x65, 0x65, 0x72,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x61, 0x64, 0x64, 0x72,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x61, 0x64, 0x64, 0x72, 0x22, 0x21, 0x0a, 0x0b,
+	0x45, 0x78, 0x65, 0x63, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x64,
+	0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22,
+	0x0e, 0x0a, 0x0c, 0x45, 0x78, 0x65, 0x63, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x1f, 0x0a, 0x09, 0x52, 0x50, 0x43, 0x50, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x12, 0x0a, 0x04,
+	0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61,
+	0x22, 0x6f, 0x0a, 0x0f, 0x50, 0x75, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0c, 0x52, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x63, 0x61, 0x70,
+	0x61, 0x63, 0x69, 0x74, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x08, 0x63, 0x61, 0x70,
+	0x61, 0x63, 0x69, 0x74, 0x79, 0x12, 0x12, 0x0a, 0x04, 0x6b, 0x65, 0x79, 0x73, 0x18, 0x03, 0x20,
+	0x03, 0x28, 0x0c, 0x52, 0x04, 0x6b, 0x65, 0x79, 0x73, 0x12, 0x16, 0x0a, 0x06, 0x76, 0x61, 0x6c,
+	0x75, 0x65, 0x73, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0c, 0x52, 0x06, 0x76, 0x61, 0x6c, 0x75, 0x65,
+	0x73, 0x22, 0x56, 0x0a, 0x10, 0x50, 0x75, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x0c, 0x52, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x73,
+	0x69, 0x7a, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x04, 0x73, 0x69, 0x7a, 0x65, 0x12,
+	0x18, 0x0a, 0x07, 0x77, 0x72, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x04,
+	0x52, 0x07, 0x77, 0x72, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x22, 0x42, 0x0a, 0x14, 0x42, 0x61, 0x74,
+	0x63, 0x68, 0x50, 0x75, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x2a, 0x0a, 0x05, 0x62, 0x61, 0x74, 0x63, 0x68, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x14, 0x2e, 0x63, 0x61, 0x70, 0x2e, 0x50, 0x75, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x05, 0x62, 0x61, 0x74, 0x63, 0x68, 0x22, 0x44, 0x0a,
+	0x15, 0x42, 0x61, 0x74, 0x63, 0x68, 0x50, 0x75, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2b, 0x0a, 0x05, 0x62, 0x61, 0x74, 0x63, 0x68, 0x18,
+	0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x63, 0x61, 0x70, 0x2e, 0x50, 0x75, 0x74, 0x53,
+	0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x52, 0x05, 0x62, 0x61,
+	0x74, 0x63, 0x68, 0x22, 0x3b, 0x0a, 0x0f, 0x47, 0x65, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x12, 0x12, 0x0a, 0x04,
+	0x6b, 0x65, 0x79, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0c, 0x52, 0x04, 0x6b, 0x65, 0x79, 0x73,
+	0x22, 0x54, 0x0a, 0x10, 0x47, 0x65, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x0c, 0x52, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x73, 0x69,
+	0x7a, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x04, 0x73, 0x69, 0x7a, 0x65, 0x12, 0x16,
+	0x0a, 0x06, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x73, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0c, 0x52, 0x06,
+	0x76, 0x61, 0x6c, 0x75, 0x65, 0x73, 0x22, 0x42, 0x0a, 0x14, 0x42, 0x61, 0x74, 0x63, 0x68, 0x47,
+	0x65, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x2a,
+	0x0a, 0x05, 0x62, 0x61, 0x74, 0x63, 0x68, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x14, 0x2e,
+	0x63, 0x61, 0x70, 0x2e, 0x47, 0x65, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x52, 0x05, 0x62, 0x61, 0x74, 0x63, 0x68, 0x22, 0x44, 0x0a, 0x15, 0x42, 0x61,
+	0x74, 0x63, 0x68, 0x47, 0x65, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x2b, 0x0a, 0x05, 0x62, 0x61, 0x74, 0x63, 0x68, 0x18, 0x01, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x15, 0x2e, 0x63, 0x61, 0x70, 0x2e, 0x47, 0x65, 0x74, 0x53, 0x74, 0x61, 0x74,
+	0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x52, 0x05, 0x62, 0x61, 0x74, 0x63, 0x68,
+	0x32, 0x33, 0x0a, 0x09, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x70, 0x6f, 0x72, 0x74, 0x12, 0x26, 0x0a,
+	0x06, 0x68, 0x61, 0x6e, 0x64, 0x6c, 0x65, 0x12, 0x0b, 0x2e, 0x63, 0x61, 0x70, 0x2e, 0x50, 0x61,
+	0x63, 0x6b, 0x65, 0x74, 0x1a, 0x0b, 0x2e, 0x63, 0x61, 0x70, 0x2e, 0x50, 0x61, 0x63, 0x6b, 0x65,
+	0x74, 0x28, 0x01, 0x30, 0x01, 0x32, 0x6f, 0x0a, 0x09, 0x50, 0x65, 0x65, 0x72, 0x53, 0x74, 0x6f,
+	0x72, 0x65, 0x12, 0x30, 0x0a, 0x03, 0x70, 0x75, 0x74, 0x12, 0x13, 0x2e, 0x63, 0x61, 0x70, 0x2e,
+	0x50, 0x75, 0x74, 0x50, 0x65, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x14,
+	0x2e, 0x63, 0x61, 0x70, 0x2e, 0x50, 0x75, 0x74, 0x50, 0x65, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x30, 0x0a, 0x03, 0x67, 0x65, 0x74, 0x12, 0x13, 0x2e, 0x63, 0x61,
+	0x70, 0x2e, 0x47, 0x65, 0x74, 0x50, 0x65, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x14, 0x2e, 0x63, 0x61, 0x70, 0x2e, 0x47, 0x65, 0x74, 0x50, 0x65, 0x65, 0x72, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0x32, 0x0a, 0x03, 0x41, 0x70, 0x70, 0x12, 0x2b, 0x0a,
+	0x04, 0x65, 0x78, 0x65, 0x63, 0x12, 0x10, 0x2e, 0x63, 0x61, 0x70, 0x2e, 0x45, 0x78, 0x65, 0x63,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x11, 0x2e, 0x63, 0x61, 0x70, 0x2e, 0x45, 0x78,
+	0x65, 0x63, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0x31, 0x0a, 0x03, 0x52, 0x50,
+	0x43, 0x12, 0x2a, 0x0a, 0x08, 0x64, 0x69, 0x73, 0x70, 0x61, 0x74, 0x63, 0x68, 0x12, 0x0e, 0x2e,
+	0x63, 0x61, 0x70, 0x2e, 0x52, 0x50, 0x43, 0x50, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x1a, 0x0e, 0x2e,
+	0x63, 0x61, 0x70, 0x2e, 0x52, 0x50, 0x43, 0x50, 0x61, 0x63, 0x6b, 0x65, 0x74, 0x32, 0xf5, 0x01,
+	0x0a, 0x05, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x32, 0x0a, 0x03, 0x70, 0x75, 0x74, 0x12, 0x14,
+	0x2e, 0x63, 0x61, 0x70, 0x2e, 0x50, 0x75, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x1a, 0x15, 0x2e, 0x63, 0x61, 0x70, 0x2e, 0x50, 0x75, 0x74, 0x53, 0x74,
+	0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x41, 0x0a, 0x08, 0x62,
+	0x61, 0x74, 0x63, 0x68, 0x50, 0x75, 0x74, 0x12, 0x19, 0x2e, 0x63, 0x61, 0x70, 0x2e, 0x42, 0x61,
+	0x74, 0x63, 0x68, 0x50, 0x75, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x63, 0x61, 0x70, 0x2e, 0x42, 0x61, 0x74, 0x63, 0x68, 0x50, 0x75,
+	0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x32,
+	0x0a, 0x03, 0x67, 0x65, 0x74, 0x12, 0x14, 0x2e, 0x63, 0x61, 0x70, 0x2e, 0x47, 0x65, 0x74, 0x53,
+	0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x15, 0x2e, 0x63, 0x61,
+	0x70, 0x2e, 0x47, 0x65, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x12, 0x41, 0x0a, 0x08, 0x62, 0x61, 0x74, 0x63, 0x68, 0x47, 0x65, 0x74, 0x12, 0x19,
+	0x2e, 0x63, 0x61, 0x70, 0x2e, 0x42, 0x61, 0x74, 0x63, 0x68, 0x47, 0x65, 0x74, 0x53, 0x74, 0x61,
+	0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x63, 0x61, 0x70, 0x2e,
+	0x42, 0x61, 0x74, 0x63, 0x68, 0x47, 0x65, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x20, 0x5a, 0x1e, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
+	0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x61, 0x70, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x67, 0x6f, 0x2d,
+	0x63, 0x61, 0x70, 0x3b, 0x63, 0x61, 0x70, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -758,40 +961,50 @@ func file_cap_proto_rawDescGZIP() []byte {
 	return file_cap_proto_rawDescData
 }
 
-var file_cap_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_cap_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_cap_proto_goTypes = []interface{}{
-	(*Message)(nil),             // 0: cap.Message
-	(*ConsensusRequest)(nil),    // 1: cap.ConsensusRequest
-	(*ConsensusResponse)(nil),   // 2: cap.ConsensusResponse
-	(*ApplicationRequest)(nil),  // 3: cap.ApplicationRequest
-	(*ApplicationResponse)(nil), // 4: cap.ApplicationResponse
-	(*StateSet)(nil),            // 5: cap.StateSet
-	(*StateSetRequest)(nil),     // 6: cap.StateSetRequest
-	(*StateSetResponse)(nil),    // 7: cap.StateSetResponse
-	(*StateGetRequest)(nil),     // 8: cap.StateGetRequest
-	(*StateGetResponse)(nil),    // 9: cap.StateGetResponse
-	(*PeerSetRequest)(nil),      // 10: cap.PeerSetRequest
-	(*PeerSetResponse)(nil),     // 11: cap.PeerSetResponse
+	(*Packet)(nil),                // 0: cap.Packet
+	(*PutPeerRequest)(nil),        // 1: cap.PutPeerRequest
+	(*PutPeerResponse)(nil),       // 2: cap.PutPeerResponse
+	(*GetPeerRequest)(nil),        // 3: cap.GetPeerRequest
+	(*GetPeerResponse)(nil),       // 4: cap.GetPeerResponse
+	(*ExecRequest)(nil),           // 5: cap.ExecRequest
+	(*ExecResponse)(nil),          // 6: cap.ExecResponse
+	(*RPCPacket)(nil),             // 7: cap.RPCPacket
+	(*PutStateRequest)(nil),       // 8: cap.PutStateRequest
+	(*PutStateResponse)(nil),      // 9: cap.PutStateResponse
+	(*BatchPutStateRequest)(nil),  // 10: cap.BatchPutStateRequest
+	(*BatchPutStateResponse)(nil), // 11: cap.BatchPutStateResponse
+	(*GetStateRequest)(nil),       // 12: cap.GetStateRequest
+	(*GetStateResponse)(nil),      // 13: cap.GetStateResponse
+	(*BatchGetStateRequest)(nil),  // 14: cap.BatchGetStateRequest
+	(*BatchGetStateResponse)(nil), // 15: cap.BatchGetStateResponse
 }
 var file_cap_proto_depIdxs = []int32{
-	0,  // 0: cap.ConsensusResponse.sendMessage:type_name -> cap.Message
-	3,  // 1: cap.ConsensusResponse.appRequest:type_name -> cap.ApplicationRequest
-	6,  // 2: cap.ApplicationResponse.stateSet:type_name -> cap.StateSetRequest
-	5,  // 3: cap.StateSetRequest.batchSet:type_name -> cap.StateSet
-	3,  // 4: cap.Application.Handle:input_type -> cap.ApplicationRequest
-	1,  // 5: cap.Consensus.Handle:input_type -> cap.ConsensusRequest
-	0,  // 6: cap.Networking.Handle:input_type -> cap.Message
-	10, // 7: cap.Networking.PeerSet:input_type -> cap.PeerSetRequest
-	6,  // 8: cap.Storage.StateSet:input_type -> cap.StateSetRequest
-	8,  // 9: cap.Storage.StateGet:input_type -> cap.StateGetRequest
-	4,  // 10: cap.Application.Handle:output_type -> cap.ApplicationResponse
-	2,  // 11: cap.Consensus.Handle:output_type -> cap.ConsensusResponse
-	0,  // 12: cap.Networking.Handle:output_type -> cap.Message
-	11, // 13: cap.Networking.PeerSet:output_type -> cap.PeerSetResponse
-	7,  // 14: cap.Storage.StateSet:output_type -> cap.StateSetResponse
-	9,  // 15: cap.Storage.StateGet:output_type -> cap.StateGetResponse
-	10, // [10:16] is the sub-list for method output_type
-	4,  // [4:10] is the sub-list for method input_type
+	8,  // 0: cap.BatchPutStateRequest.batch:type_name -> cap.PutStateRequest
+	9,  // 1: cap.BatchPutStateResponse.batch:type_name -> cap.PutStateResponse
+	12, // 2: cap.BatchGetStateRequest.batch:type_name -> cap.GetStateRequest
+	13, // 3: cap.BatchGetStateResponse.batch:type_name -> cap.GetStateResponse
+	0,  // 4: cap.Transport.handle:input_type -> cap.Packet
+	1,  // 5: cap.PeerStore.put:input_type -> cap.PutPeerRequest
+	3,  // 6: cap.PeerStore.get:input_type -> cap.GetPeerRequest
+	5,  // 7: cap.App.exec:input_type -> cap.ExecRequest
+	7,  // 8: cap.RPC.dispatch:input_type -> cap.RPCPacket
+	8,  // 9: cap.State.put:input_type -> cap.PutStateRequest
+	10, // 10: cap.State.batchPut:input_type -> cap.BatchPutStateRequest
+	12, // 11: cap.State.get:input_type -> cap.GetStateRequest
+	14, // 12: cap.State.batchGet:input_type -> cap.BatchGetStateRequest
+	0,  // 13: cap.Transport.handle:output_type -> cap.Packet
+	2,  // 14: cap.PeerStore.put:output_type -> cap.PutPeerResponse
+	4,  // 15: cap.PeerStore.get:output_type -> cap.GetPeerResponse
+	6,  // 16: cap.App.exec:output_type -> cap.ExecResponse
+	7,  // 17: cap.RPC.dispatch:output_type -> cap.RPCPacket
+	9,  // 18: cap.State.put:output_type -> cap.PutStateResponse
+	11, // 19: cap.State.batchPut:output_type -> cap.BatchPutStateResponse
+	13, // 20: cap.State.get:output_type -> cap.GetStateResponse
+	15, // 21: cap.State.batchGet:output_type -> cap.BatchGetStateResponse
+	13, // [13:22] is the sub-list for method output_type
+	4,  // [4:13] is the sub-list for method input_type
 	4,  // [4:4] is the sub-list for extension type_name
 	4,  // [4:4] is the sub-list for extension extendee
 	0,  // [0:4] is the sub-list for field type_name
@@ -804,7 +1017,7 @@ func file_cap_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_cap_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Message); i {
+			switch v := v.(*Packet); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -816,7 +1029,7 @@ func file_cap_proto_init() {
 			}
 		}
 		file_cap_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ConsensusRequest); i {
+			switch v := v.(*PutPeerRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -828,7 +1041,7 @@ func file_cap_proto_init() {
 			}
 		}
 		file_cap_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ConsensusResponse); i {
+			switch v := v.(*PutPeerResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -840,7 +1053,7 @@ func file_cap_proto_init() {
 			}
 		}
 		file_cap_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ApplicationRequest); i {
+			switch v := v.(*GetPeerRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -852,7 +1065,7 @@ func file_cap_proto_init() {
 			}
 		}
 		file_cap_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ApplicationResponse); i {
+			switch v := v.(*GetPeerResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -864,7 +1077,7 @@ func file_cap_proto_init() {
 			}
 		}
 		file_cap_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StateSet); i {
+			switch v := v.(*ExecRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -876,7 +1089,7 @@ func file_cap_proto_init() {
 			}
 		}
 		file_cap_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StateSetRequest); i {
+			switch v := v.(*ExecResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -888,7 +1101,7 @@ func file_cap_proto_init() {
 			}
 		}
 		file_cap_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StateSetResponse); i {
+			switch v := v.(*RPCPacket); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -900,7 +1113,7 @@ func file_cap_proto_init() {
 			}
 		}
 		file_cap_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StateGetRequest); i {
+			switch v := v.(*PutStateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -912,7 +1125,7 @@ func file_cap_proto_init() {
 			}
 		}
 		file_cap_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StateGetResponse); i {
+			switch v := v.(*PutStateResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -924,7 +1137,7 @@ func file_cap_proto_init() {
 			}
 		}
 		file_cap_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*PeerSetRequest); i {
+			switch v := v.(*BatchPutStateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -936,7 +1149,55 @@ func file_cap_proto_init() {
 			}
 		}
 		file_cap_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*PeerSetResponse); i {
+			switch v := v.(*BatchPutStateResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cap_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetStateRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cap_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetStateResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cap_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*BatchGetStateRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cap_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*BatchGetStateResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -948,19 +1209,15 @@ func file_cap_proto_init() {
 			}
 		}
 	}
-	file_cap_proto_msgTypes[2].OneofWrappers = []interface{}{
-		(*ConsensusResponse_SendMessage)(nil),
-		(*ConsensusResponse_AppRequest)(nil),
-	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_cap_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   12,
+			NumMessages:   16,
 			NumExtensions: 0,
-			NumServices:   4,
+			NumServices:   5,
 		},
 		GoTypes:           file_cap_proto_goTypes,
 		DependencyIndexes: file_cap_proto_depIdxs,
@@ -980,286 +1237,105 @@ var _ grpc.ClientConnInterface
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion6
 
-// ApplicationClient is the client API for Application service.
+// TransportClient is the client API for Transport service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type ApplicationClient interface {
-	Handle(ctx context.Context, in *ApplicationRequest, opts ...grpc.CallOption) (*ApplicationResponse, error)
+type TransportClient interface {
+	/// handle transport send/recv packet
+	Handle(ctx context.Context, opts ...grpc.CallOption) (Transport_HandleClient, error)
 }
 
-type applicationClient struct {
+type transportClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewApplicationClient(cc grpc.ClientConnInterface) ApplicationClient {
-	return &applicationClient{cc}
+func NewTransportClient(cc grpc.ClientConnInterface) TransportClient {
+	return &transportClient{cc}
 }
 
-func (c *applicationClient) Handle(ctx context.Context, in *ApplicationRequest, opts ...grpc.CallOption) (*ApplicationResponse, error) {
-	out := new(ApplicationResponse)
-	err := c.cc.Invoke(ctx, "/cap.Application/Handle", in, out, opts...)
+func (c *transportClient) Handle(ctx context.Context, opts ...grpc.CallOption) (Transport_HandleClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_Transport_serviceDesc.Streams[0], "/cap.Transport/handle", opts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
-}
-
-// ApplicationServer is the server API for Application service.
-type ApplicationServer interface {
-	Handle(context.Context, *ApplicationRequest) (*ApplicationResponse, error)
-}
-
-// UnimplementedApplicationServer can be embedded to have forward compatible implementations.
-type UnimplementedApplicationServer struct {
-}
-
-func (*UnimplementedApplicationServer) Handle(context.Context, *ApplicationRequest) (*ApplicationResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Handle not implemented")
-}
-
-func RegisterApplicationServer(s *grpc.Server, srv ApplicationServer) {
-	s.RegisterService(&_Application_serviceDesc, srv)
-}
-
-func _Application_Handle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ApplicationRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ApplicationServer).Handle(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cap.Application/Handle",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ApplicationServer).Handle(ctx, req.(*ApplicationRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-var _Application_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "cap.Application",
-	HandlerType: (*ApplicationServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "Handle",
-			Handler:    _Application_Handle_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "cap.proto",
-}
-
-// ConsensusClient is the client API for Consensus service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type ConsensusClient interface {
-	Handle(ctx context.Context, in *ConsensusRequest, opts ...grpc.CallOption) (*ConsensusResponse, error)
-}
-
-type consensusClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewConsensusClient(cc grpc.ClientConnInterface) ConsensusClient {
-	return &consensusClient{cc}
-}
-
-func (c *consensusClient) Handle(ctx context.Context, in *ConsensusRequest, opts ...grpc.CallOption) (*ConsensusResponse, error) {
-	out := new(ConsensusResponse)
-	err := c.cc.Invoke(ctx, "/cap.Consensus/Handle", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// ConsensusServer is the server API for Consensus service.
-type ConsensusServer interface {
-	Handle(context.Context, *ConsensusRequest) (*ConsensusResponse, error)
-}
-
-// UnimplementedConsensusServer can be embedded to have forward compatible implementations.
-type UnimplementedConsensusServer struct {
-}
-
-func (*UnimplementedConsensusServer) Handle(context.Context, *ConsensusRequest) (*ConsensusResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Handle not implemented")
-}
-
-func RegisterConsensusServer(s *grpc.Server, srv ConsensusServer) {
-	s.RegisterService(&_Consensus_serviceDesc, srv)
-}
-
-func _Consensus_Handle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ConsensusRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ConsensusServer).Handle(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cap.Consensus/Handle",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ConsensusServer).Handle(ctx, req.(*ConsensusRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-var _Consensus_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "cap.Consensus",
-	HandlerType: (*ConsensusServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "Handle",
-			Handler:    _Consensus_Handle_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "cap.proto",
-}
-
-// NetworkingClient is the client API for Networking service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type NetworkingClient interface {
-	Handle(ctx context.Context, opts ...grpc.CallOption) (Networking_HandleClient, error)
-	/// Update networking peer set
-	PeerSet(ctx context.Context, in *PeerSetRequest, opts ...grpc.CallOption) (*PeerSetResponse, error)
-}
-
-type networkingClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewNetworkingClient(cc grpc.ClientConnInterface) NetworkingClient {
-	return &networkingClient{cc}
-}
-
-func (c *networkingClient) Handle(ctx context.Context, opts ...grpc.CallOption) (Networking_HandleClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Networking_serviceDesc.Streams[0], "/cap.Networking/Handle", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &networkingHandleClient{stream}
+	x := &transportHandleClient{stream}
 	return x, nil
 }
 
-type Networking_HandleClient interface {
-	Send(*Message) error
-	Recv() (*Message, error)
+type Transport_HandleClient interface {
+	Send(*Packet) error
+	Recv() (*Packet, error)
 	grpc.ClientStream
 }
 
-type networkingHandleClient struct {
+type transportHandleClient struct {
 	grpc.ClientStream
 }
 
-func (x *networkingHandleClient) Send(m *Message) error {
+func (x *transportHandleClient) Send(m *Packet) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *networkingHandleClient) Recv() (*Message, error) {
-	m := new(Message)
+func (x *transportHandleClient) Recv() (*Packet, error) {
+	m := new(Packet)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func (c *networkingClient) PeerSet(ctx context.Context, in *PeerSetRequest, opts ...grpc.CallOption) (*PeerSetResponse, error) {
-	out := new(PeerSetResponse)
-	err := c.cc.Invoke(ctx, "/cap.Networking/PeerSet", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+// TransportServer is the server API for Transport service.
+type TransportServer interface {
+	/// handle transport send/recv packet
+	Handle(Transport_HandleServer) error
 }
 
-// NetworkingServer is the server API for Networking service.
-type NetworkingServer interface {
-	Handle(Networking_HandleServer) error
-	/// Update networking peer set
-	PeerSet(context.Context, *PeerSetRequest) (*PeerSetResponse, error)
+// UnimplementedTransportServer can be embedded to have forward compatible implementations.
+type UnimplementedTransportServer struct {
 }
 
-// UnimplementedNetworkingServer can be embedded to have forward compatible implementations.
-type UnimplementedNetworkingServer struct {
-}
-
-func (*UnimplementedNetworkingServer) Handle(Networking_HandleServer) error {
+func (*UnimplementedTransportServer) Handle(Transport_HandleServer) error {
 	return status.Errorf(codes.Unimplemented, "method Handle not implemented")
 }
-func (*UnimplementedNetworkingServer) PeerSet(context.Context, *PeerSetRequest) (*PeerSetResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PeerSet not implemented")
+
+func RegisterTransportServer(s *grpc.Server, srv TransportServer) {
+	s.RegisterService(&_Transport_serviceDesc, srv)
 }
 
-func RegisterNetworkingServer(s *grpc.Server, srv NetworkingServer) {
-	s.RegisterService(&_Networking_serviceDesc, srv)
+func _Transport_Handle_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(TransportServer).Handle(&transportHandleServer{stream})
 }
 
-func _Networking_Handle_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(NetworkingServer).Handle(&networkingHandleServer{stream})
-}
-
-type Networking_HandleServer interface {
-	Send(*Message) error
-	Recv() (*Message, error)
+type Transport_HandleServer interface {
+	Send(*Packet) error
+	Recv() (*Packet, error)
 	grpc.ServerStream
 }
 
-type networkingHandleServer struct {
+type transportHandleServer struct {
 	grpc.ServerStream
 }
 
-func (x *networkingHandleServer) Send(m *Message) error {
+func (x *transportHandleServer) Send(m *Packet) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *networkingHandleServer) Recv() (*Message, error) {
-	m := new(Message)
+func (x *transportHandleServer) Recv() (*Packet, error) {
+	m := new(Packet)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func _Networking_PeerSet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PeerSetRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(NetworkingServer).PeerSet(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cap.Networking/PeerSet",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NetworkingServer).PeerSet(ctx, req.(*PeerSetRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-var _Networking_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "cap.Networking",
-	HandlerType: (*NetworkingServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "PeerSet",
-			Handler:    _Networking_PeerSet_Handler,
-		},
-	},
+var _Transport_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "cap.Transport",
+	HandlerType: (*TransportServer)(nil),
+	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "Handle",
-			Handler:       _Networking_Handle_Handler,
+			StreamName:    "handle",
+			Handler:       _Transport_Handle_Handler,
 			ServerStreams: true,
 			ClientStreams: true,
 		},
@@ -1267,108 +1343,440 @@ var _Networking_serviceDesc = grpc.ServiceDesc{
 	Metadata: "cap.proto",
 }
 
-// StorageClient is the client API for Storage service.
+// PeerStoreClient is the client API for PeerStore service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type StorageClient interface {
-	StateSet(ctx context.Context, in *StateSetRequest, opts ...grpc.CallOption) (*StateSetResponse, error)
-	StateGet(ctx context.Context, in *StateGetRequest, opts ...grpc.CallOption) (*StateGetResponse, error)
+type PeerStoreClient interface {
+	/// set peers
+	Put(ctx context.Context, in *PutPeerRequest, opts ...grpc.CallOption) (*PutPeerResponse, error)
+	/// get peers
+	Get(ctx context.Context, in *GetPeerRequest, opts ...grpc.CallOption) (*GetPeerResponse, error)
 }
 
-type storageClient struct {
+type peerStoreClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewStorageClient(cc grpc.ClientConnInterface) StorageClient {
-	return &storageClient{cc}
+func NewPeerStoreClient(cc grpc.ClientConnInterface) PeerStoreClient {
+	return &peerStoreClient{cc}
 }
 
-func (c *storageClient) StateSet(ctx context.Context, in *StateSetRequest, opts ...grpc.CallOption) (*StateSetResponse, error) {
-	out := new(StateSetResponse)
-	err := c.cc.Invoke(ctx, "/cap.Storage/StateSet", in, out, opts...)
+func (c *peerStoreClient) Put(ctx context.Context, in *PutPeerRequest, opts ...grpc.CallOption) (*PutPeerResponse, error) {
+	out := new(PutPeerResponse)
+	err := c.cc.Invoke(ctx, "/cap.PeerStore/put", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *storageClient) StateGet(ctx context.Context, in *StateGetRequest, opts ...grpc.CallOption) (*StateGetResponse, error) {
-	out := new(StateGetResponse)
-	err := c.cc.Invoke(ctx, "/cap.Storage/StateGet", in, out, opts...)
+func (c *peerStoreClient) Get(ctx context.Context, in *GetPeerRequest, opts ...grpc.CallOption) (*GetPeerResponse, error) {
+	out := new(GetPeerResponse)
+	err := c.cc.Invoke(ctx, "/cap.PeerStore/get", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// StorageServer is the server API for Storage service.
-type StorageServer interface {
-	StateSet(context.Context, *StateSetRequest) (*StateSetResponse, error)
-	StateGet(context.Context, *StateGetRequest) (*StateGetResponse, error)
+// PeerStoreServer is the server API for PeerStore service.
+type PeerStoreServer interface {
+	/// set peers
+	Put(context.Context, *PutPeerRequest) (*PutPeerResponse, error)
+	/// get peers
+	Get(context.Context, *GetPeerRequest) (*GetPeerResponse, error)
 }
 
-// UnimplementedStorageServer can be embedded to have forward compatible implementations.
-type UnimplementedStorageServer struct {
+// UnimplementedPeerStoreServer can be embedded to have forward compatible implementations.
+type UnimplementedPeerStoreServer struct {
 }
 
-func (*UnimplementedStorageServer) StateSet(context.Context, *StateSetRequest) (*StateSetResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StateSet not implemented")
+func (*UnimplementedPeerStoreServer) Put(context.Context, *PutPeerRequest) (*PutPeerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Put not implemented")
 }
-func (*UnimplementedStorageServer) StateGet(context.Context, *StateGetRequest) (*StateGetResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StateGet not implemented")
-}
-
-func RegisterStorageServer(s *grpc.Server, srv StorageServer) {
-	s.RegisterService(&_Storage_serviceDesc, srv)
+func (*UnimplementedPeerStoreServer) Get(context.Context, *GetPeerRequest) (*GetPeerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
 }
 
-func _Storage_StateSet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StateSetRequest)
+func RegisterPeerStoreServer(s *grpc.Server, srv PeerStoreServer) {
+	s.RegisterService(&_PeerStore_serviceDesc, srv)
+}
+
+func _PeerStore_Put_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PutPeerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StorageServer).StateSet(ctx, in)
+		return srv.(PeerStoreServer).Put(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cap.Storage/StateSet",
+		FullMethod: "/cap.PeerStore/Put",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServer).StateSet(ctx, req.(*StateSetRequest))
+		return srv.(PeerStoreServer).Put(ctx, req.(*PutPeerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Storage_StateGet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StateGetRequest)
+func _PeerStore_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPeerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StorageServer).StateGet(ctx, in)
+		return srv.(PeerStoreServer).Get(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cap.Storage/StateGet",
+		FullMethod: "/cap.PeerStore/Get",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StorageServer).StateGet(ctx, req.(*StateGetRequest))
+		return srv.(PeerStoreServer).Get(ctx, req.(*GetPeerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _Storage_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "cap.Storage",
-	HandlerType: (*StorageServer)(nil),
+var _PeerStore_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "cap.PeerStore",
+	HandlerType: (*PeerStoreServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "StateSet",
-			Handler:    _Storage_StateSet_Handler,
+			MethodName: "put",
+			Handler:    _PeerStore_Put_Handler,
 		},
 		{
-			MethodName: "StateGet",
-			Handler:    _Storage_StateGet_Handler,
+			MethodName: "get",
+			Handler:    _PeerStore_Get_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "cap.proto",
+}
+
+// AppClient is the client API for App service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type AppClient interface {
+	/// exec
+	Exec(ctx context.Context, in *ExecRequest, opts ...grpc.CallOption) (*ExecResponse, error)
+}
+
+type appClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewAppClient(cc grpc.ClientConnInterface) AppClient {
+	return &appClient{cc}
+}
+
+func (c *appClient) Exec(ctx context.Context, in *ExecRequest, opts ...grpc.CallOption) (*ExecResponse, error) {
+	out := new(ExecResponse)
+	err := c.cc.Invoke(ctx, "/cap.App/exec", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// AppServer is the server API for App service.
+type AppServer interface {
+	/// exec
+	Exec(context.Context, *ExecRequest) (*ExecResponse, error)
+}
+
+// UnimplementedAppServer can be embedded to have forward compatible implementations.
+type UnimplementedAppServer struct {
+}
+
+func (*UnimplementedAppServer) Exec(context.Context, *ExecRequest) (*ExecResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Exec not implemented")
+}
+
+func RegisterAppServer(s *grpc.Server, srv AppServer) {
+	s.RegisterService(&_App_serviceDesc, srv)
+}
+
+func _App_Exec_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExecRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppServer).Exec(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cap.App/Exec",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppServer).Exec(ctx, req.(*ExecRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _App_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "cap.App",
+	HandlerType: (*AppServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "exec",
+			Handler:    _App_Exec_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "cap.proto",
+}
+
+// RPCClient is the client API for RPC service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type RPCClient interface {
+	/// dispatch rpc packet
+	Dispatch(ctx context.Context, in *RPCPacket, opts ...grpc.CallOption) (*RPCPacket, error)
+}
+
+type rPCClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewRPCClient(cc grpc.ClientConnInterface) RPCClient {
+	return &rPCClient{cc}
+}
+
+func (c *rPCClient) Dispatch(ctx context.Context, in *RPCPacket, opts ...grpc.CallOption) (*RPCPacket, error) {
+	out := new(RPCPacket)
+	err := c.cc.Invoke(ctx, "/cap.RPC/dispatch", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// RPCServer is the server API for RPC service.
+type RPCServer interface {
+	/// dispatch rpc packet
+	Dispatch(context.Context, *RPCPacket) (*RPCPacket, error)
+}
+
+// UnimplementedRPCServer can be embedded to have forward compatible implementations.
+type UnimplementedRPCServer struct {
+}
+
+func (*UnimplementedRPCServer) Dispatch(context.Context, *RPCPacket) (*RPCPacket, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Dispatch not implemented")
+}
+
+func RegisterRPCServer(s *grpc.Server, srv RPCServer) {
+	s.RegisterService(&_RPC_serviceDesc, srv)
+}
+
+func _RPC_Dispatch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RPCPacket)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RPCServer).Dispatch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cap.RPC/Dispatch",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RPCServer).Dispatch(ctx, req.(*RPCPacket))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _RPC_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "cap.RPC",
+	HandlerType: (*RPCServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "dispatch",
+			Handler:    _RPC_Dispatch_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "cap.proto",
+}
+
+// StateClient is the client API for State service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type StateClient interface {
+	Put(ctx context.Context, in *PutStateRequest, opts ...grpc.CallOption) (*PutStateResponse, error)
+	BatchPut(ctx context.Context, in *BatchPutStateRequest, opts ...grpc.CallOption) (*BatchPutStateResponse, error)
+	Get(ctx context.Context, in *GetStateRequest, opts ...grpc.CallOption) (*GetStateResponse, error)
+	BatchGet(ctx context.Context, in *BatchGetStateRequest, opts ...grpc.CallOption) (*BatchGetStateResponse, error)
+}
+
+type stateClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewStateClient(cc grpc.ClientConnInterface) StateClient {
+	return &stateClient{cc}
+}
+
+func (c *stateClient) Put(ctx context.Context, in *PutStateRequest, opts ...grpc.CallOption) (*PutStateResponse, error) {
+	out := new(PutStateResponse)
+	err := c.cc.Invoke(ctx, "/cap.State/put", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *stateClient) BatchPut(ctx context.Context, in *BatchPutStateRequest, opts ...grpc.CallOption) (*BatchPutStateResponse, error) {
+	out := new(BatchPutStateResponse)
+	err := c.cc.Invoke(ctx, "/cap.State/batchPut", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *stateClient) Get(ctx context.Context, in *GetStateRequest, opts ...grpc.CallOption) (*GetStateResponse, error) {
+	out := new(GetStateResponse)
+	err := c.cc.Invoke(ctx, "/cap.State/get", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *stateClient) BatchGet(ctx context.Context, in *BatchGetStateRequest, opts ...grpc.CallOption) (*BatchGetStateResponse, error) {
+	out := new(BatchGetStateResponse)
+	err := c.cc.Invoke(ctx, "/cap.State/batchGet", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// StateServer is the server API for State service.
+type StateServer interface {
+	Put(context.Context, *PutStateRequest) (*PutStateResponse, error)
+	BatchPut(context.Context, *BatchPutStateRequest) (*BatchPutStateResponse, error)
+	Get(context.Context, *GetStateRequest) (*GetStateResponse, error)
+	BatchGet(context.Context, *BatchGetStateRequest) (*BatchGetStateResponse, error)
+}
+
+// UnimplementedStateServer can be embedded to have forward compatible implementations.
+type UnimplementedStateServer struct {
+}
+
+func (*UnimplementedStateServer) Put(context.Context, *PutStateRequest) (*PutStateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Put not implemented")
+}
+func (*UnimplementedStateServer) BatchPut(context.Context, *BatchPutStateRequest) (*BatchPutStateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BatchPut not implemented")
+}
+func (*UnimplementedStateServer) Get(context.Context, *GetStateRequest) (*GetStateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
+}
+func (*UnimplementedStateServer) BatchGet(context.Context, *BatchGetStateRequest) (*BatchGetStateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BatchGet not implemented")
+}
+
+func RegisterStateServer(s *grpc.Server, srv StateServer) {
+	s.RegisterService(&_State_serviceDesc, srv)
+}
+
+func _State_Put_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PutStateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StateServer).Put(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cap.State/Put",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StateServer).Put(ctx, req.(*PutStateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _State_BatchPut_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BatchPutStateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StateServer).BatchPut(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cap.State/BatchPut",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StateServer).BatchPut(ctx, req.(*BatchPutStateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _State_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetStateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StateServer).Get(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cap.State/Get",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StateServer).Get(ctx, req.(*GetStateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _State_BatchGet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BatchGetStateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StateServer).BatchGet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cap.State/BatchGet",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StateServer).BatchGet(ctx, req.(*BatchGetStateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _State_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "cap.State",
+	HandlerType: (*StateServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "put",
+			Handler:    _State_Put_Handler,
+		},
+		{
+			MethodName: "batchPut",
+			Handler:    _State_BatchPut_Handler,
+		},
+		{
+			MethodName: "get",
+			Handler:    _State_Get_Handler,
+		},
+		{
+			MethodName: "batchGet",
+			Handler:    _State_BatchGet_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
