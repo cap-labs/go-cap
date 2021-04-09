@@ -3,6 +3,7 @@ package cap
 import "github.com/libs4go/errors"
 
 //go:generate protoc --proto_path=./proto-cap --go_out=plugins=grpc,paths=source_relative:. cap.proto
+//go:generate protoc --proto_path=./proto-cap --go_out=plugins=grpc,paths=source_relative:./blockchain blockchain.proto
 
 // ScopeOfAPIError .
 const errVendor = "go-cap"
